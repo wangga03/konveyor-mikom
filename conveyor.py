@@ -1,10 +1,11 @@
 import cv2 as cv
 import numpy as np
 import time
+import serial
 
 
+arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
 def main(capture) :
-
     data1=np.load('/home/wgg/Github/konveyor-mikom/low.npy')
     data2=np.load('/home/wgg/Github/konveyor-mikom/high.npy')
 
@@ -32,6 +33,8 @@ def main(capture) :
 
             if lastCounter == counter :
                 counter+=1
+            counterToArduino = str(f"{lastCounter} ")
+            arduino.write(counterToArduino.encode())
             cv.putText(frame, 'Bata Putih', (x, y+50), font, 1, colour, 2)
             cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour, 2)
             cv.rectangle(frame, (x, y), (w + x, h + y), (255,255,255), 2)
@@ -49,8 +52,12 @@ def main(capture) :
     cv.destroyAllWindows()
 
 
+
+
+
 if __name__ == '__main__' :
     
     cap = cv.VideoCapture(2)    
+    
     main(cap)
 
