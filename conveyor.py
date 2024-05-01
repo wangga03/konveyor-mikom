@@ -30,13 +30,15 @@ def main(capture) :
 
             x, y, w, h = cv.boundingRect(largest_contours)
 
-            counter+=1
+            if lastCounter == counter :
+                counter+=1
             cv.putText(frame, 'Bata Putih', (x, y+50), font, 1, colour, 2)
-            cv.putText(frame, f'Jumlah Bata : {counter}', (100, 100), font, 1, colour, 2)
+            cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour, 2)
             cv.rectangle(frame, (x, y), (w + x, h + y), (255,255,255), 2)
 
         else :
-            counter = 0
+
+            lastCounter = counter
 
 
         cv.imshow("frame", frame)
