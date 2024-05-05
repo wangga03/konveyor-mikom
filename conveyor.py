@@ -6,15 +6,15 @@ import serial
 
 arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
 def main(capture) :
-    data1=np.load('/home/wgg/Github/konveyor-mikom/low.npy')
-    data2=np.load('/home/wgg/Github/konveyor-mikom/high.npy')
+    low=np.load('/home/wgg/Github/konveyor-mikom/low.npy')
+    high=np.load('/home/wgg/Github/konveyor-mikom/high.npy')
 
     counter = 0
     lastCounter = 1
     while(True) :
         ret, frame = capture.read()
         hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
-        tresh_whiteColor = cv.inRange(hsv, data1, data2)
+        tresh_whiteColor = cv.inRange(hsv, low, high)
         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5,5))
         tresh_whiteColor = cv.morphologyEx(tresh_whiteColor, cv.MORPH_OPEN, kernel)
 
