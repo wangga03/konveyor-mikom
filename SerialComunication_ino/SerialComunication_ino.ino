@@ -8,10 +8,10 @@ void loop() {
 
     if (Serial.available() > 0) {
         char incomingByte = Serial.read();
-        if (incomingByte == '\n') { // Jika menerima karakter newline, itu menandakan akhir kata
+        if (incomingByte == ' ') { // Jika menerima karakter newline, itu menandakan akhir kata
             receivedData[dataIndex] = '\0'; // Menambahkan null terminator untuk menandai akhir string
             Serial.print("Data yang diterima dari Python: ");
-            Serial.print(receivedData);
+            Serial.println(receivedData);
             dataIndex = 0; // Reset indeks untuk menerima kata berikutnya
         } else {
             receivedData[dataIndex] = incomingByte;

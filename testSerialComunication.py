@@ -10,6 +10,7 @@ while True:
     # num = input("Enter a number: ") # Taking input from user 
 
     for i in range(10, 100,10) :
-
-        value = write_read(i)     
+        num = str(f"{i} ")
+        value = write_read(num)     
         print(value) # printing the value 
+        time.sleep(1)
