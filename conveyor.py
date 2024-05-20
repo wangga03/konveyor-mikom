@@ -4,10 +4,10 @@ import time
 import serial
 
 
-arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
+# arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
 def main(capture) :
-    low=np.load('/home/wgg/Github/konveyor-mikom/low.npy')
-    high=np.load('/home/wgg/Github/konveyor-mikom/high.npy')
+    low=np.load('/home/wgg/Github/konveyor-mikom/GREEN_low.npy')
+    high=np.load('/home/wgg/Github/konveyor-mikom/GREEN_high.npy')
 
     counter = 0
     lastCounter = 1
@@ -22,9 +22,9 @@ def main(capture) :
 
         print(len(contour_white))
         
-        if 3 <= len(contour_white) <= 10:
+        if 2 <= len(contour_white) <= 10:
 
-            colour = (255,255,255)
+            colour = (0,255,255)
             font = cv.FONT_HERSHEY_SIMPLEX
 
             largest_contours = max(contour_white, key=cv.contourArea)
@@ -34,10 +34,10 @@ def main(capture) :
             if lastCounter == counter :
                 counter+=1
             counterToArduino = str(f"{lastCounter} ")
-            arduino.write(counterToArduino.encode())
+            # arduino.write(counterToArduino.encode())
             cv.putText(frame, 'Bata Putih', (x, y+50), font, 1, colour, 2)
             cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour, 2)
-            cv.rectangle(frame, (x, y), (w + x, h + y), (255,255,255), 2)
+            cv.rectangle(frame, (x, y), (w + x, h + y), (0,255,255), 2)
 
         else :
 
@@ -45,6 +45,7 @@ def main(capture) :
 
 
         cv.imshow("frame", frame)
+        cv.imshow("tresh", tresh_whiteColor)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
     
@@ -57,7 +58,7 @@ def main(capture) :
 
 if __name__ == '__main__' :
     
-    cap = cv.VideoCapture(2)    
+    cap = cv.VideoCapture(0)    
     
     main(cap)
 
