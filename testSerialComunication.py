@@ -14,3 +14,4 @@ while True:
         value = write_read(num)     
         print(value) # printing the value 
         time.sleep(1)
+
