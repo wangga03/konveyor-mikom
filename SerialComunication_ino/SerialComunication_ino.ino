@@ -12,8 +12,8 @@ void setup() {
 }
 
 void loop() {
-    static char receivedData[20]; // Maksimum panjang kata yang diharapkan
-    static int dataIndex = 0;
+    char receivedData[20]; // Maksimum panjang kata yang diharapkan
+    int dataIndex = 0;
 
     if (Serial.available() > 0) {
         char incomingByte = Serial.read();
