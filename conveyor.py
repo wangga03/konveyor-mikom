@@ -6,8 +6,8 @@ import serial
 
 # arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
 def main(capture) :
-    low=np.load('/home/wgg/Github/konveyor-mikom/GREEN_low.npy')
-    high=np.load('/home/wgg/Github/konveyor-mikom/GREEN_high.npy')
+    low=np.load('low.npy')
+    high=np.load('high.npy')
 
     counter = 0
     lastCounter = 1
