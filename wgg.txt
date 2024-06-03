@@ -1,1 +1,2 @@
 halo, wgg disini
+test push lewat wgg_ubuntu
