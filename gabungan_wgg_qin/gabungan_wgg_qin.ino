@@ -1,3 +1,7 @@
+#include <OLED_I2C.h>
+
+OLED  myOLED(SDA, SCL);
+
 int RPWM = 5;
 int LPWM = 6;
 int L_EN = 3;
@@ -8,7 +12,12 @@ int relayPin = 8; // Pin relay
 int potValue;
 int motorSpeed;
 
+extern uint8_t BigNumbers[];
+extern uint8_t SmallFont[];
+
 void setup() {
+  if(!myOLED.begin(SSD1306_128X32))
+    while(1);
   pinMode(RPWM, OUTPUT);
   pinMode(LPWM, OUTPUT);
   pinMode(R_EN, OUTPUT);
@@ -29,19 +38,48 @@ void loop() {
 
   char receivedData[20]; // 20 Maksimum panjang kata yang diharapkan
   int dataIndex = 0;
+  bool newDataReceived = false;
 
-  if (Serial.available() > 0) {
+  // if (Serial.available() > 0) {
+  //       char incomingByte = Serial.read();
+  //       if (incomingByte == ' ') { // Jika menerima karakter newline, itu menandakan akhir kata
+  //           receivedData[dataIndex] = '\0'; // Menambahkan null terminator untuk menandai akhir string
+  //           dataIndex = 0; // Reset indeks untuk menerima kata berikutnya
+  //       } else {
+  //           receivedData[dataIndex] = incomingByte;
+  //           dataIndex++;
+  //           if (dataIndex >= 19) { // Jika panjang kata melebihi 19 karakter, batalkan dan reset
+  //               dataIndex = 0;
+  //           }
+  //       }
+  // }
+
+  while (Serial.available() > 0) {
         char incomingByte = Serial.read();
-        if (incomingByte == ' ') { // Jika menerima karakter newline, itu menandakan akhir kata
+        if (incomingByte == ' ') { // Jika menerima karakter spasi, itu menandakan akhir kata
             receivedData[dataIndex] = '\0'; // Menambahkan null terminator untuk menandai akhir string
             dataIndex = 0; // Reset indeks untuk menerima kata berikutnya
+            newDataReceived = true; // Mark that new data has been received
         } else {
             receivedData[dataIndex] = incomingByte;
             dataIndex++;
-            if (dataIndex >= 19) { // Jika panjang kata melebihi 19 karakter, batalkan dan reset
+            if (dataIndex >= sizeof(receivedData) - 1) { // Jika panjang kata melebihi panjang maksimal, batalkan dan reset
                 dataIndex = 0;
+                memset(receivedData, 0, sizeof(receivedData));
             }
         }
+    }
+
+  if(newDataReceived){
+
+    float convert2Float = atof(receivedData);
+
+    myOLED.setFont(BigNumbers);
+    // myOLED.setFont(SmallFont);
+    myOLED.clrScr();
+    myOLED.printNumF(convert2Float, 0, CENTER, 1);
+    // myOLED.print(receivedData,CENTER, 1);
+    myOLED.update();
   }
 
   // =====================================================================================
@@ -72,5 +110,5 @@ void loop() {
     Serial.println(motorSpeed);
   }
 
-  delay(100); // Delay untuk memperlambat pembacaan potensiometer dan sensor
+  delay(500); // Delay untuk memperlambat pembacaan potensiometer dan sensor
 }
