@@ -4,7 +4,7 @@ import numpy as np
 def nothing(x):
         pass
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 # Mengatur lebar dan tinggi frame
 cap.set(3, 640)
@@ -41,8 +41,8 @@ while(True):
     upper = np.array([h_u,s_u,v_u])
 
     # Menyimpan data range warna bola
-    np.save('GREEN_low.npy', lower)
-    np.save('GREEN_high.npy', upper)
+    np.save('white_low.npy', lower)
+    np.save('white_high.npy', upper)
 
     # Melakukan thresholding pada frame HSV
     thresholding = cv2.inRange(hsv, lower, upper)

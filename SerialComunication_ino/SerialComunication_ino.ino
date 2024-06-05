@@ -28,6 +28,8 @@ void loop() {
             }
         }
     }
+
+    float convert2Float = atof(receivedData);
     Serial.print("Data yang diterima dari Python: ");
     Serial.println(receivedData);
     lcd.clear();
