@@ -17,7 +17,7 @@ void setup()
 void loop()
 {
   float i = 10.0;
-  myOLED.setFont(BigNumbers);
+  myOLED.setFont(BigNu\mbers);
   myOLED.clrScr();
   myOLED.printNumF(10, 0, CENTER, 1);
   myOLED.update();

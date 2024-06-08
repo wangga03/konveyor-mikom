@@ -43,7 +43,7 @@ def main(capture) :
         tresh_white = cv.morphologyEx(tresh_whiteColor, cv.MORPH_OPEN, kernel)
 
         contour_green,_= cv.findContours(tresh_green, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
-        contour_white,_= cv.findContours(tresh_green, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+        contour_white,_= cv.findContours(tresh_white, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
         print(len(contour_green))
 
@@ -87,7 +87,7 @@ def main(capture) :
 if __name__ == '__main__' :
     
 		## Membaca aliran data dari camera,0 merupakan index camera. Index camera tidak selalu 0
-    cap = cv.VideoCapture(2)    
+    cap = cv.VideoCapture(0)    
     
     main(cap)
 
