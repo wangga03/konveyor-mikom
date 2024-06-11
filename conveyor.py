@@ -60,7 +60,7 @@ def main(capture) :
         contour_green,_= cv.findContours(tresh_green, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
         contour_white,_= cv.findContours(tresh_white, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
-        print(len(contour_green))
+        # print(len(contour_green))
 
         if 2 <= len(contour_white) <= 10 :
             largest_contours_white = max(contour_white, key=cv.contourArea)
@@ -91,6 +91,7 @@ def main(capture) :
 
 		## Menampilkan window untuk frame
         cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
+        print(f"hasil hitung : {lastCounter}")
         cv.imshow("frame", frame)
         cv.imshow("frame2", frame2)
         # cv.imshow("frame crop", frameCrop)
