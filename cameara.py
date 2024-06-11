@@ -1,26 +1,29 @@
-import cv2 as cv
+import cv2
 
+# Membuka kamera (atau video file)
+cap = cv2.VideoCapture(0)  # 0 untuk webcam default
 
-def main(camera) :
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
 
-    
-    while True :
-        
-        ret, frame = camera.read()
-        cut_img = frame[10:10, 20:10]
+    # Menentukan koordinat untuk crop
+    x_start = 100
+    y_start = 50
+    x_end = 400
+    y_end = 300
 
-        flip = cv.flip(frame, 1)
-        blur = cv.blur(flip,(10, 2))
-        cv.imshow("Frame", flip)
-        cv.imshow("Frame", cut_img)
-        if cv.waitKey(1) & 0xFF == ord('q') :
-            break
-    
-    camera.release()
-    cv.destroyAllWindows()
+    # Melakukan crop
+    cropped_frame = frame[y_start:y_end, x_start:x_end]
 
-if __name__ == '__main__' :
-    camera = cv.VideoCapture(0)
-    
-    main(camera)
+    # Menampilkan frame yang sudah dipotong
+    cv2.imshow('Cropped Frame', cropped_frame)
 
+    # Tekan 'q' untuk keluar dari loop
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Membersihkan dan menutup jendela
+cap.release()
+cv2.destroyAllWindows()

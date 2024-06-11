@@ -3,16 +3,25 @@ import numpy as np
 import time
 import serial
 
-
+x_start = 100
+y_start = 250
+x_end = 500
+y_end = 480
 # arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
 def main(capture) :
+
+    width = 640
+    height = 480
+    capture.set(cv.CAP_PROP_FRAME_WIDTH, width)
+    capture.set(cv.CAP_PROP_FRAME_HEIGHT, height)
+
     colour_green = (0,255,0)
     colour_red = (0,0,255)
     font = cv.FONT_HERSHEY_SIMPLEX
-    low_green=np.load('conveyor_belt_low.npy')
-    high_green=np.load('conveyor_belt_high.npy')
-    low_white=np.load('white_low.npy')
-    high_white=np.load('white_high.npy')
+    low_green=np.load('GREEN_low.npy')
+    high_green=np.load('GREEN_high.npy')
+    low_white=np.load('red_low.npy')
+    high_white=np.load('red_high.npy')
 
 		## inisialisasi nilai awal, last counter = 1 hanya sebagai syarat
     counter = 0
@@ -23,6 +32,9 @@ def main(capture) :
         status = True
 		## capture.read() membaca frame dari variabel capture. Ret mengandung nilai boolean
         ret, frame = capture.read()
+        # frameCrop = frameCrop[y_start:y_end, x_start:x_end]
+
+        frame = frame[y_start:y_end, x_start:x_end]
 
 		## cv.cvtColor() digunakan untuk convert warna, dari BGR ke HSV
         hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
@@ -30,6 +42,9 @@ def main(capture) :
 		## Setahu saya untuk fungsinya seperti masking berdasarkan warna pada Photo editing
         tresh_greenColor = cv.inRange(hsv, low_green, high_green)
         tresh_whiteColor = cv.inRange(hsv, low_white, high_white)
+
+        tresh_whiteColor = tresh_whiteColor[y_start:y_end, x_start:x_end]
+        tresh_greenColor = tresh_greenColor[y_start:y_end, x_start:x_end]
 
         ## Invert detection
 
@@ -54,9 +69,9 @@ def main(capture) :
 
             cv.rectangle(frame, (x, y), (w + x, h + y), colour_red, 2)
             status = False
-            print("\n============\nColor White Detected\n===========\n")
+            # print("\n============\nColor White Detected\n===========\n")
         
-        if 2 <= len(contour_green) <= 10:
+        if 2 <= len(contour_green) <= 50:
 
 
             largest_contours = max(contour_green, key=cv.contourArea)
@@ -76,8 +91,10 @@ def main(capture) :
 
 		## Menampilkan window untuk frame
         cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
-        cv.imshow("frame", frame)
-        cv.imshow("tresh", tresh_whiteColor)
+        cv.imshow("frame", hsv)
+        # cv.imshow("frame crop", frameCrop)
+        cv.imshow("tresh green", tresh_green)
+        cv.imshow("tresh white", tresh_white)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
     
@@ -87,7 +104,7 @@ def main(capture) :
 if __name__ == '__main__' :
     
 		## Membaca aliran data dari camera,0 merupakan index camera. Index camera tidak selalu 0
-    cap = cv.VideoCapture(0)    
+    cap = cv.VideoCapture(2)    
     
     main(cap)
 
