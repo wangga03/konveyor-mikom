@@ -90,13 +90,13 @@ def main(capture) :
                 lastCounter = counter
 
 		## Menampilkan window untuk frame
-        cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
-        print(f"hasil hitung : {lastCounter}")
-        cv.imshow("frame", frame)
-        cv.imshow("frame2", frame2)
-        # cv.imshow("frame crop", frameCrop)
-        cv.imshow("tresh green", tresh_green)
-        cv.imshow("tresh white", tresh_white)
+        # cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
+        # print(f"hasil hitung : {lastCounter}")
+        # cv.imshow("frame", frame)
+        # cv.imshow("frame2", frame2)
+        # # cv.imshow("frame crop", frameCrop)
+        # cv.imshow("tresh green", tresh_green)
+        # cv.imshow("tresh white", tresh_white)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
     
