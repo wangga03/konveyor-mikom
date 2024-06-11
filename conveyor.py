@@ -91,7 +91,8 @@ def main(capture) :
 
 		## Menampilkan window untuk frame
         # cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
-        # print(f"hasil hitung : {lastCounter}")
+        print(f"ret : {ret}")
+        print(f"hasil hitung : {lastCounter}")
         # cv.imshow("frame", frame)
         # cv.imshow("frame2", frame2)
         # # cv.imshow("frame crop", frameCrop)
