@@ -7,7 +7,7 @@ x_start = 100
 y_start = 250
 x_end = 500
 y_end = 480
-# arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
+arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
 def main(capture) :
 
     width = 640
@@ -81,7 +81,7 @@ def main(capture) :
             if lastCounter == counter :
                 counter+=1
             counterToArduino = str(f"{lastCounter} ")
-            # arduino.write(counterToArduino.encode())
+            arduino.write(counterToArduino.encode())
             # cv.putText(frame, 'Bata Hitam', (x, y+50), font, 1, colour_green, 2)
             # cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
 
