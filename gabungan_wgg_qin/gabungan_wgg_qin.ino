@@ -70,6 +70,10 @@ void loop() {
         }
     }
 
+    Serial.print("data yang diterima : ");
+    Serial.print(receivedData);
+    Serial.println();
+
   if(newDataReceived){
 
     float convert2Float = atof(receivedData);
