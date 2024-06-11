@@ -41,8 +41,8 @@ while(True):
     upper = np.array([h_u,s_u,v_u])
 
     # Menyimpan data range warna bola
-    np.save('red_low.npy', lower)
-    np.save('red_high.npy', upper)
+    np.save('kuning_low.npy', lower)       
+    np.save('kuning_high.npy', upper)
 
     # Melakukan thresholding pada frame HSV
     thresholding = cv2.inRange(hsv, lower, upper)

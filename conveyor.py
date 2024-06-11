@@ -18,8 +18,8 @@ def main(capture) :
     colour_green = (0,255,0)
     colour_red = (0,0,255)
     font = cv.FONT_HERSHEY_SIMPLEX
-    low_green=np.load('GREEN_low.npy')
-    high_green=np.load('GREEN_high.npy')
+    low_green=np.load('kuning_low.npy')
+    high_green=np.load('kuning_high.npy')
     low_white=np.load('red_low.npy')
     high_white=np.load('red_high.npy')
 
@@ -32,10 +32,10 @@ def main(capture) :
         status = True
 		## capture.read() membaca frame dari variabel capture. Ret mengandung nilai boolean
         ret, frame = capture.read()
+        ret, frame2 = capture.read()
+
         # frameCrop = frameCrop[y_start:y_end, x_start:x_end]
-
         frame = frame[y_start:y_end, x_start:x_end]
-
 		## cv.cvtColor() digunakan untuk convert warna, dari BGR ke HSV
         hsv = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
@@ -43,12 +43,12 @@ def main(capture) :
         tresh_greenColor = cv.inRange(hsv, low_green, high_green)
         tresh_whiteColor = cv.inRange(hsv, low_white, high_white)
 
-        tresh_whiteColor = tresh_whiteColor[y_start:y_end, x_start:x_end]
-        tresh_greenColor = tresh_greenColor[y_start:y_end, x_start:x_end]
+        # tresh_whiteColor = tresh_whiteColor[y_start:y_end, x_start:x_end]
+        # tresh_greenColor = tresh_greenColor[y_start:y_end, x_start:x_end]
 
         ## Invert detection
 
-        _, thress = cv.threshold(tresh_greenColor, 220, 255, cv.THRESH_BINARY_INV)
+        _, thress = cv.threshold(tresh_greenColor, 220, 255, cv.THRESH_BINARY)
 
 		## ====
         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5,5))
@@ -71,7 +71,7 @@ def main(capture) :
             status = False
             # print("\n============\nColor White Detected\n===========\n")
         
-        if 2 <= len(contour_green) <= 50:
+        if 1 <= len(contour_green) <= 50:
 
 
             largest_contours = max(contour_green, key=cv.contourArea)
@@ -91,7 +91,8 @@ def main(capture) :
 
 		## Menampilkan window untuk frame
         cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
-        cv.imshow("frame", hsv)
+        cv.imshow("frame", frame)
+        cv.imshow("frame2", frame2)
         # cv.imshow("frame crop", frameCrop)
         cv.imshow("tresh green", tresh_green)
         cv.imshow("tresh white", tresh_white)
