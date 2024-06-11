@@ -67,7 +67,7 @@ def main(capture) :
 
             x, y, w, h = cv.boundingRect(largest_contours_white)
 
-            cv.rectangle(frame, (x, y), (w + x, h + y), colour_red, 2)
+            # cv.rectangle(frame, (x, y), (w + x, h + y), colour_red, 2)
             status = False
             # print("\n============\nColor White Detected\n===========\n")
         
@@ -82,8 +82,8 @@ def main(capture) :
                 counter+=1
             counterToArduino = str(f"{lastCounter} ")
             # arduino.write(counterToArduino.encode())
-            cv.putText(frame, 'Bata Hitam', (x, y+50), font, 1, colour_green, 2)
-            cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
+            # cv.putText(frame, 'Bata Hitam', (x, y+50), font, 1, colour_green, 2)
+            # cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
 
         else :
             if status == True :
