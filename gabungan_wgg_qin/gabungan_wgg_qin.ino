@@ -1,5 +1,7 @@
 #include <OLED_I2C.h>
 
+#include "Adafruit_LiquidCrystal.h"
+Adafruit_LiquidCrystal lcd(0x27, 16, 2);
 OLED  myOLED(SDA, SCL);
 
 int RPWM = 10;
@@ -16,6 +18,7 @@ extern uint8_t BigNumbers[];
 extern uint8_t SmallFont[];
 
 void setup() {
+  lcd.backlight();
   if(!myOLED.begin(SSD1306_128X32))
     while(1);
   pinMode(RPWM, OUTPUT);
@@ -78,12 +81,14 @@ void loop() {
 
     float convert2Float = atof(receivedData);
 
-    myOLED.setFont(BigNumbers);
-    // myOLED.setFont(SmallFont);
-    myOLED.clrScr();
-    myOLED.printNumF(convert2Float, 0, CENTER, 1);
-    // myOLED.print(receivedData,CENTER, 1);
-    myOLED.update();
+    lcd.print(receivedData);
+
+    // myOLED.setFont(BigNumbers);
+    // // myOLED.setFont(SmallFont);
+    // myOLED.clrScr();
+    // myOLED.printNumF(convert2Float, 0, CENTER, 1);
+    // // myOLED.print(receivedData,CENTER, 1);
+    // myOLED.update();
   }
 
   // =====================================================================================

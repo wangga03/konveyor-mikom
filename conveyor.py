@@ -7,7 +7,7 @@ x_start = 100
 y_start = 250
 x_end = 500
 y_end = 480
-arduino = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=.1) 
+arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=.1) 
 def main(capture) :
 
     width = 640
@@ -18,8 +18,8 @@ def main(capture) :
     colour_green = (0,255,0)
     colour_red = (0,0,255)
     font = cv.FONT_HERSHEY_SIMPLEX
-    low_green=np.load('kuning_low.npy')
-    high_green=np.load('kuning_high.npy')
+    low_green=np.load('green_low.npy')
+    high_green=np.load('green_high.npy')
     low_white=np.load('red_low.npy')
     high_white=np.load('red_high.npy')
 
@@ -48,7 +48,7 @@ def main(capture) :
 
         ## Invert detection
 
-        _, thress = cv.threshold(tresh_greenColor, 220, 255, cv.THRESH_BINARY)
+        _, thress = cv.threshold(tresh_greenColor, 220, 255, cv.THRESH_BINARY_INV)
 
 		## ====
         kernel = cv.getStructuringElement(cv.MORPH_ELLIPSE, (5,5))
@@ -80,24 +80,24 @@ def main(capture) :
 
             if lastCounter == counter :
                 counter+=1
-            counterToArduino = str(f"{lastCounter} ")
-            arduino.write(counterToArduino.encode())
             # cv.putText(frame, 'Bata Hitam', (x, y+50), font, 1, colour_green, 2)
-            # cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
+            cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
 
         else :
             if status == True :
                 lastCounter = counter
 
 		## Menampilkan window untuk frame
-        # cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
+        cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
+        counterToArduino = str(f"{lastCounter} ")
+        arduino.write(counterToArduino.encode())
         print(f"ret : {ret}")
         print(f"hasil hitung : {lastCounter}")
-        # cv.imshow("frame", frame)
-        # cv.imshow("frame2", frame2)
-        # # cv.imshow("frame crop", frameCrop)
-        # cv.imshow("tresh green", tresh_green)
-        # cv.imshow("tresh white", tresh_white)
+        cv.imshow("frame", frame)
+        cv.imshow("frame2", frame2)
+        # cv.imshow("frame crop", frameCrop)
+        cv.imshow("tresh green", tresh_green)
+        cv.imshow("tresh white", tresh_white)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
     
@@ -107,7 +107,7 @@ def main(capture) :
 if __name__ == '__main__' :
     
 		## Membaca aliran data dari camera,0 merupakan index camera. Index camera tidak selalu 0
-    cap = cv.VideoCapture(0)    
+    cap = cv.VideoCapture(2)    
     
     main(cap)
 
