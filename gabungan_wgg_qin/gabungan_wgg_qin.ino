@@ -2,11 +2,11 @@
 
 OLED  myOLED(SDA, SCL);
 
-int RPWM = 5;
-int LPWM = 6;
-int L_EN = 3;
-int R_EN = 2;
-int potPin = A2;
+int RPWM = 10;
+int LPWM = 11;
+int L_EN = 13;
+int R_EN = 12;
+int potPin = A1;
 int infraredPin = 7; // Pin sensor infrared
 int relayPin = 8; // Pin relay
 int potValue;
