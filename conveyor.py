@@ -107,7 +107,7 @@ def main(capture) :
 if __name__ == '__main__' :
     
 		## Membaca aliran data dari camera,0 merupakan index camera. Index camera tidak selalu 0
-    cap = cv.VideoCapture(2)    
+    cap = cv.VideoCapture(0)    
     
     main(cap)
 
