@@ -7,7 +7,7 @@ x_start = 100
 y_start = 250
 x_end = 500
 y_end = 480
-arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=.1) 
+# arduino = serial.Serial(port='/dev/ttyACM0', baudrate=9600, timeout=.1) 
 def main(capture) :
 
     width = 640
@@ -90,10 +90,10 @@ def main(capture) :
 		## Menampilkan window untuk frame
         cv.putText(frame, f'Jumlah Bata : {lastCounter}', (100, 100), font, 1, colour_green, 2)
         counterToArduino = str(f"{lastCounter} ")
-        arduino.write(counterToArduino.encode())
+        # arduino.write(counterToArduino.encode())
         print(f"ret : {ret}")
         print(f"hasil hitung : {lastCounter}")
-        # cv.imshow("frame", frame)
+        cv.imshow("frame", frame)
         # cv.imshow("frame2", frame2)
         # # cv.imshow("frame crop", frameCrop)
         cv.imshow("tresh green", tresh_green)
@@ -107,7 +107,7 @@ def main(capture) :
 if __name__ == '__main__' :
     
 		## Membaca aliran data dari camera,0 merupakan index camera. Index camera tidak selalu 0
-    cap = cv.VideoCapture(0)    
+    cap = cv.VideoCapture(2)    
     
     main(cap)
 
