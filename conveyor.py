@@ -81,7 +81,7 @@ def main(capture) :
             if lastCounter == counter :
                 counter+=1
             # cv.putText(frame, 'Bata Hitam', (x, y+50), font, 1, colour_green, 2)
-            # cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
+            cv.rectangle(frame, (x, y), (w + x, h + y), colour_green, 2)
 
         else :
             if status == True :
@@ -96,7 +96,7 @@ def main(capture) :
         # cv.imshow("frame", frame)
         # cv.imshow("frame2", frame2)
         # # cv.imshow("frame crop", frameCrop)
-        # cv.imshow("tresh green", tresh_green)
+        cv.imshow("tresh green", tresh_green)
         # cv.imshow("tresh white", tresh_white)
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
